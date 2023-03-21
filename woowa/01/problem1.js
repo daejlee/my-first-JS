@@ -5,24 +5,15 @@ REQUIRED FEATURES
 2. print output format as directed
 */
 
-const problem1 = {
-	pobi: {},
-	crong: {},
-	res: 0
-}
-
 function get_res(pobi, crong)
 {
-	const res = [];
-	for (i = 0; i < 3; i++)
-	{
-		if (get_max(pobi[i][0]) > get_max(crong[i][0]))
-			res.push(1);
-		else if (get_max(pobi[i][0]) === get_max(crong[i][0]))
-			res.push(0);
-		else
-			res.push(2);
-	}
+	let res;
+	if (get_max(pobi[0]) > get_max(crong[0]))
+		res = 1;
+	else if (get_max(pobi[0]) === get_max(crong[0]))
+		res = 0;
+	else
+		res = 2;
 	return (res);
 }
 
@@ -37,17 +28,17 @@ function get_max(idx)
 function make_table()
 {
 	let idx;
-	let max;
-	const table = []; // doesn't work -> Object.freeze later.
-	for (i = 0; i < 3; i++)
-	{
-		idx = Math.floor(Math.random() * 399);
-		table.push([idx, idx + 1]);
-	}
+	idx = Math.floor(Math.random() * 399);
+	table = [idx, idx + 1];
 	return (table);
 }
 
-problem1.pobi = make_table();
-problem1.crong = make_table();
-problem1.res = get_res(problem1.pobi, problem1.crong);
-console.log(problem1);
+function problem1()
+{
+	pobi = make_table();
+	crong = make_table();
+	res = get_res(pobi, crong);
+	return (res);
+}
+
+module.exports = problem1;
