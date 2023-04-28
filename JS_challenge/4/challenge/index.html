@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="style.css">
+		<title>Random Number Game</title>
+	</head>
+	<body>
+		<h1>Random Number Game</h1>
+		<form id="numbers">
+			<h3>Generate a number between 0 and <input required id="max-number" type="number" /></h3>
+			<p>Guess the number: <input id="input-number" required type="number"/><input type="submit" value="play!"/></p>
+		</form>
+		<p id="result" class="hidden"></p>
+		<h3 id="result-message"></h3>
+		<script src="app.js"></script>
+	</body>
+</html>
