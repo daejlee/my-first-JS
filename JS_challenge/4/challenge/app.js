@@ -3,7 +3,6 @@ const numbers = document.querySelector("#numbers");
 const maxNumber = numbers.querySelector("#max-number");
 const inputNumber = numbers.querySelector("#input-number");
 
-
 function play(event)
 {
 	const randomNumber = Math.floor(Math.random() * (Number(maxNumber.value) + 1));
