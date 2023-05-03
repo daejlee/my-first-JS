@@ -9,17 +9,37 @@
 	<script type="text/babel">
 		const root = document.getElementById("root");
 		function App() {
-			const [counter, setCounter] = React.useState(0);//JS의 편한 문법
-			const onClick = () => {
-				setCounter(counter + 1);//리렌더링 해줄 것이다. (새로운 컴포넌트, 새로운 값으로)
+			const [minutes, setMinutes] = React.useState();
+			const onChange = (event) => {
+				setMinutes(event.target.value); //updater
 			};
+			const reset = () => setMinutes(0);
 			return (
-			<div>
-				<h3>Total clicks: {counter}</h3>
-				<button onClick={onClick}>Click me</button>
-			</div>)
+				<div>
+					<div>
+						<h1 className="hi">Super Converter</h1>
+						<label htmlFor="minutes">Minutes</label>
+						<input
+							value={minutes}
+							id="minutes"
+							placeholder="Minutes"
+							type="number"
+							onChange={onChange} //listener
+						/>
+					</div>
+					<div>
+						<label htmlFor="hours">Hours</label>
+						<input
+							value={Math.round(minutes / 60)}
+							id="Hours"
+							placeholder="Hours"
+							type="number"
+							disabled
+						/>
+					</div>
+					<button onClick={reset}>Reset</button>
+				</div>);
 		};
 		ReactDOM.render(<App />, root);
-		//React는 바뀐 요소만을 반영한다. -> 인터렉티브한 어플.
 	</script>
 </html>
