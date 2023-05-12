@@ -14,7 +14,7 @@ function App() {
 			<Route path="/hello">
 					<h1>Hello</h1>
 				</Route>
-			<Route path="/movie/:id">	//not just id. its :id
+			<Route path="/movie/:id">
 				<Detail />
 			</Route>
 			<Route path="/">
