@@ -2,52 +2,47 @@ import { useEffect, useState } from "react";
 
 function App() {
 	const [loading, setLoading] = useState(true);
-	const [coins, setCoins] = useState([]); //give default value! if don't it will be undefined
-	const [inputUSD, setInputUSD] = useState("");
-	const [coinUSD, setCoinUSD] = useState(0);
-	const [myCoins, setMyCoins] = useState(0);
-	const onCoinChange = (event) => {
-		setCoinUSD(JSON.parse(event.target.value).quotes.USD.price);
-	};
-	const onInputUSDChange = (event) => setInputUSD(event.target.value);
-	const onSubmit = (event) =>{
-		event.preventDefault();
-		setMyCoins(coinUSD / inputUSD);
-		setInputUSD("");
-	}
+	const [movies, setMovies] = useState([]);
+	const getMovies = async() => {
+		const json = await (
+			await fetch(
+		`https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`
+		)
+		).json();
+		setMovies(json.data.movies);
+		setLoading(false);
+		};
 	useEffect(() => {
-		fetch("https://api.coinpaprika.com/v1/tickers")
+		fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`)
 		.then((response) => response.json())
 		.then((json) => {
-			setCoins(json);
+			setMovies(json.data.movies);
 			setLoading(false);
 		});
 	}, []);
+	console.log(movies);
 	return (
 	<div>
-		<h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
-		{loading ? <strong>Loading</strong> : 
-		<select onChange={onCoinChange}>
-			<option value="xx">Select your cripto</option>
-			{coins.map((coin) => (
-				<option value={JSON.stringify(coin)}>
-					{coin.name} ({coin.symbol}) : ${coin.quotes.USD.price} USD
-				</option>
+		{loading ? (
+		<h1>Loading...</h1>
+		) : (
+		<div>
+			{movies.map(movie => (
+			<div key={movie.id}>
+				<img src={movie.medium_cover_image} />
+				<h2>{movie.title}</h2>
+				<p>{movie.summary}</p>
+				<ul>
+					{movie.genres.map((g) => (
+					<li key={g}>{g}</li> //React는 키를 원한다 !!
+					))}
+				</ul>
+			</div>
 			))}
-		</select>}
-		<hr></hr>
-		<h1>How much cripto can I get? 🥺</h1>
-		<form onSubmit={onSubmit}>
-			<input
-			onChange={onInputUSDChange}
-			value={inputUSD}
-			type="text"
-			placeholder='input USD'
-			/>
-		</form>
-		<h2>{myCoins} cripto</h2>
-	</div>
-	);
+			</div>
+			)}
+			</div>)
+			;
 }
-//challenge !!: get an USD input and display how much cripto currency can I buy
+
 export default App;
